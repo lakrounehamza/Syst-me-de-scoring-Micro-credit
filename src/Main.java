@@ -29,6 +29,7 @@ public class Main {
                 "Informatique"
         );
 //         System.out.println(e1.toString());
-        d.addEmploye(e1);
+       // d.addEmploye(e1);
+        d.deleteEmploye("f24b1050-32ba-4c11-ae3d-705ecfbea32a");
     }
 }

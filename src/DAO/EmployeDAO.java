@@ -3,6 +3,8 @@ package DAO;
 import model.ConnectionDB;
 import model.Employe;
 import  java.sql.*;
+import java.util.UUID;
+
 public class EmployeDAO {
     public  EmployeDAO(){}
     public void addEmploye(Employe employe) {
@@ -33,5 +35,44 @@ public class EmployeDAO {
             System.out.println(" Erreur SQL : " + e.getMessage());
         }
     }
+    public void deleteEmploye(String idU){
+        try(Connection connection  = ConnectionDB.getInstance().getConnection()){
+            PreparedStatement  stmt = connection.prepareStatement("delete from employes   where  id = ?");
+            stmt.setString(1,idU);
+            stmt.executeUpdate();
+            System.out.println("delete   avec succes");
+        }catch (SQLException exception){
+            System.out.println("SQL  error : "+exception.getMessage() );
+        }
+    }
+    public void updateEmploye(Employe  newEmploye){
+        try(Connection  connection  =  ConnectionDB.getInstance().getConnection()){
+            PreparedStatement stmt = connection.prepareStatement(
+                    "UPDATE employe SET nom = ?, prenom = ?, datedenaissance = ?, ville = ?, nombreEnfants = ?, " +
+                            "investissement = ?, placement = ?, situation_familiale = ?, score = ?, salaire = ?, " +
+                            "anciennete = ?, poste = ?, typecontrat = ?, secteur = ? WHERE id = ?"
+            );
 
+            stmt.setString(1, newEmploye.getNom());
+            stmt.setString(2, newEmploye.getPrenom());
+            stmt.setDate(3, Date.valueOf(newEmploye.getDatedenaissance()));
+            stmt.setString(4, newEmploye.getVille());
+            stmt.setInt(5, newEmploye.getNombreEnfants());
+            stmt.setString(6, newEmploye.getInvestissement());
+            stmt.setString(7, newEmploye.getPlacement());
+            stmt.setString(8, newEmploye.getSituation_familiale());
+            stmt.setInt(9, newEmploye.getScore());
+            stmt.setDouble(10, newEmploye.getSalaire());
+            stmt.setDate(11, Date.valueOf(newEmploye.getAnciennete()));
+            stmt.setString(12, newEmploye.getPoste());
+            stmt.setString(13, newEmploye.getTypecontrat());
+            stmt.setString(14, newEmploye.getSecteur());
+            stmt.setString(15, newEmploye.getId().toString());
+            stmt.executeUpdate();
+            System.out.println("updated  avec succes");
+            stmt.executeUpdate();
+        }catch(SQLException e){
+
+        }
+    }
 }
