@@ -103,7 +103,7 @@ CREATE PROCEDURE insert_employe (
     IN p_secteur VARCHAR(50)
 )
 BEGIN
-    INSERT INTO personnes (
+    INSERT INTO persones (
         id, nom, prenom, datedenaissance, ville, nombreEnfants,
         investissement, placement, situation_familiale, score
     ) VALUES (
@@ -140,7 +140,7 @@ CREATE PROCEDURE insert_personne_professionnel (
     IN p_activite VARCHAR(100)
 )
 BEGIN
-    INSERT INTO personnes (
+    INSERT INTO persones (
         id, nom, prenom, datedenaissance, ville, nombreEnfants,
         investissement, placement, situation_familiale, score
     ) VALUES (

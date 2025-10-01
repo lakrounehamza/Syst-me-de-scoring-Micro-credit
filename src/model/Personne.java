@@ -1,6 +1,7 @@
 package model;
 
 import javax.xml.crypto.Data;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -8,7 +9,7 @@ public abstract class Personne {
     protected UUID id  ;
     protected  String nom  ;
     protected  String prenom;
-    protected Date datedenaissance ;
+    protected LocalDate datedenaissance ;
     protected  String ville ;
     protected  int nombreEnfants;
     protected  String investissement;
@@ -17,7 +18,7 @@ public abstract class Personne {
     protected  String createdAt;
     protected  int score;
 
-    public Personne( String nom, String prenom, Date datedenaissance, String ville, int nombreEnfants, String investissement, String placement, String situation_familiale, String createdAt, int score) {
+    public Personne( String nom, String prenom, LocalDate datedenaissance, String ville, int nombreEnfants, String investissement, String placement, String situation_familiale, String createdAt, int score) {
         setId();
         this.nom = nom;
         this.prenom = prenom;
@@ -59,11 +60,11 @@ public abstract class Personne {
         this.prenom = prenom;
     }
 
-    public Date getDatedenaissance() {
+    public LocalDate getDatedenaissance() {
         return datedenaissance;
     }
 
-    public void setDatedenaissance(Date datedenaissance) {
+    public void setDatedenaissance(LocalDate datedenaissance) {
         this.datedenaissance = datedenaissance;
     }
 
@@ -126,7 +127,7 @@ public abstract class Personne {
         return  "id =" + id +
                 ", nom= '" + nom + '\'' +
                 ", prenom= '" + prenom + '\'' +
-                ", datedenaissance= " + datedenaissance +
+                ", datedenaissance= " + datedenaissance.toString() +
                 ", ville= '" + ville + '\'' +
                 ", nombreEnfants= " + nombreEnfants +
                 ", investissement= '" + investissement + '\'' +

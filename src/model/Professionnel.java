@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Professionnel extends Personne {
@@ -8,7 +9,7 @@ public class Professionnel extends Personne {
     private String secteuractivite;
     private String activite;
 
-    public Professionnel(String nom, String prenom, Date datedenaissance, String ville, int nombreEnfants, String investissement, String placement, String situation_familiale, String createdAt, int score, String immatriculationfiscale, String secteuractivite, String activite) {
+    public Professionnel(String nom, String prenom, LocalDate datedenaissance, String ville, int nombreEnfants, String investissement, String placement, String situation_familiale, String createdAt, int score, String immatriculationfiscale, String secteuractivite, String activite) {
         super(nom, prenom, datedenaissance, ville, nombreEnfants, investissement, placement, situation_familiale, createdAt, score);
         this.immatriculationfiscale = immatriculationfiscale;
         this.secteuractivite = secteuractivite;

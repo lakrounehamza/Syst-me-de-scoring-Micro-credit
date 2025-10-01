@@ -1,15 +1,16 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class Employe  extends Personne{
     private double salaire ;
-    private Date Anciennete;
+    private LocalDate Anciennete;
     private String poste;
     private String typecontrat;
     private String secteur ;
 
-    public Employe(String nom, String prenom, Date datedenaissance, String ville, int nombreEnfants, String investissement, String placement, String situation_familiale, String createdAt, int score, double salaire, Date anciennete, String poste, String typecontrat, String secteur) {
+    public Employe(String nom, String prenom, LocalDate datedenaissance, String ville, int nombreEnfants, String investissement, String placement, String situation_familiale, String createdAt, int score, double salaire, LocalDate anciennete, String poste, String typecontrat, String secteur) {
         super(nom, prenom, datedenaissance, ville, nombreEnfants, investissement, placement, situation_familiale, createdAt, score);
         this.salaire = salaire;
         Anciennete = anciennete;
@@ -26,11 +27,11 @@ public class Employe  extends Personne{
         this.salaire = salaire;
     }
 
-    public Date getAnciennete() {
+    public LocalDate getAnciennete() {
         return Anciennete;
     }
 
-    public void setAnciennete(Date anciennete) {
+    public void setAnciennete(LocalDate anciennete) {
         Anciennete = anciennete;
     }
 
@@ -61,7 +62,7 @@ public class Employe  extends Personne{
     public String toString() {
         return super.toString()+
                 "salaire=" + salaire +
-                ", Anciennete=" + Anciennete +
+                ", Anciennete=" + Anciennete.toString() +
                 ", poste='" + poste + '\'' +
                 ", typecontrat='" + typecontrat + '\'' +
                 ", secteur='" + secteur + '\'';
