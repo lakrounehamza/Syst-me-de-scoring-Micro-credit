@@ -3,6 +3,7 @@ import model.Employe;
 import  java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.stream.Stream;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -29,7 +30,9 @@ public class Main {
                 "Informatique"
         );
 //         System.out.println(e1.toString());
-       // d.addEmploye(e1);
-        d.deleteEmploye("f24b1050-32ba-4c11-ae3d-705ecfbea32a");
+        //d.addEmploye(e1);
+       // d.deleteEmploye("f24b1050-32ba-4c11-ae3d-705ecfbea32a");
+        d.getAllEmploye().forEach(employe -> System.out.println(employe.toString()));
+
     }
 }

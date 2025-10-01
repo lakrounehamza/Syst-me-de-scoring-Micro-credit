@@ -2,11 +2,16 @@ package DAO;
 
 import model.ConnectionDB;
 import model.Employe;
-import  java.sql.*;
+
+import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class EmployeDAO {
-    public  EmployeDAO(){}
+    public EmployeDAO() {
+    }
+
     public void addEmploye(Employe employe) {
         String sql = "CALL insert_employe(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
@@ -35,18 +40,20 @@ public class EmployeDAO {
             System.out.println(" Erreur SQL : " + e.getMessage());
         }
     }
-    public void deleteEmploye(String idU){
-        try(Connection connection  = ConnectionDB.getInstance().getConnection()){
-            PreparedStatement  stmt = connection.prepareStatement("delete from employes   where  id = ?");
-            stmt.setString(1,idU);
+
+    public void deleteEmploye(String idU) {
+        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
+            PreparedStatement stmt = connection.prepareStatement("delete from employes   where  id = ?");
+            stmt.setString(1, idU);
             stmt.executeUpdate();
             System.out.println("delete   avec succes");
-        }catch (SQLException exception){
-            System.out.println("SQL  error : "+exception.getMessage() );
+        } catch (SQLException exception) {
+            System.out.println("SQL  error : " + exception.getMessage());
         }
     }
-    public void updateEmploye(Employe  newEmploye){
-        try(Connection  connection  =  ConnectionDB.getInstance().getConnection()){
+
+    public void updateEmploye(Employe newEmploye) {
+        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
             PreparedStatement stmt = connection.prepareStatement(
                     "UPDATE employe SET nom = ?, prenom = ?, datedenaissance = ?, ville = ?, nombreEnfants = ?, " +
                             "investissement = ?, placement = ?, situation_familiale = ?, score = ?, salaire = ?, " +
@@ -71,8 +78,40 @@ public class EmployeDAO {
             stmt.executeUpdate();
             System.out.println("updated  avec succes");
             stmt.executeUpdate();
-        }catch(SQLException e){
+        } catch (SQLException e) {
 
         }
+    }
+
+    public ArrayList<Employe> getAllEmploye() {
+        ArrayList<Employe> array = new ArrayList<>();
+        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
+            Statement stmt = connection.createStatement();
+            ResultSet res = stmt.executeQuery("select  p.* , e.salaire ,e.anciennete,e.poste,e.typecontrat,e.secteur   from  employes  e  join   persones  p   on   p.id=e.id");
+            while (res.next()) {
+                array.add(
+                        new Employe(
+                                res.getString("nom"),
+                                res.getString("prenom"),
+                                res.getDate("datedenaissance").toLocalDate(),
+                                res.getString("ville"),
+                                res.getInt("nombreEnfants"),
+                                res.getString("investissement"),
+                                res.getString("placement"),
+                                res.getString("situation_familiale"),
+                                res.getString("createdAt"),
+                                res.getInt("score"),
+                                res.getDouble("salaire"),
+                                res.getDate("anciennete").toLocalDate(),
+                                res.getString("poste"),
+                                res.getString("typecontrat"),
+                                res.getString("secteur")
+                        )
+                );
+            }
+        } catch (SQLException e) {
+
+        }
+        return array;
     }
 }
