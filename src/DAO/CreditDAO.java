@@ -1,12 +1,12 @@
 package DAO;
 
+import enums.DecisionEnum;
 import model.ConnectionDB;
 import model.Credit;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class CreditDAO {
     public void addCredit(Credit credit ,String idPersonne) {
@@ -58,5 +58,32 @@ public class CreditDAO {
         }catch (SQLException e){
             System.out.println("SQL  erorr : "+e.getMessage());
         }
+    }
+    public ArrayList<Credit> getAllCreditByIDPersonne(String id) {
+        ArrayList<Credit> list = new ArrayList<>();
+        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
+            PreparedStatement stmt = connection.prepareStatement(
+                    "SELECT dateDeCredit, montantDemande, montantOctroye, tauxInteret, dureeEnMois, typeCredit, decision " +
+                            "FROM credits WHERE idpersonne = ?"
+            );
+            stmt.setString(1, id);
+            ResultSet res = stmt.executeQuery();
+
+            while (res.next()) {
+                LocalDate dateDeCredit = res.getDate("dateDeCredit").toLocalDate();
+                double montantDemande = res.getDouble("montantDemande");
+                double montantOctroye = res.getDouble("montantOctroye");
+                double tauxInteret = res.getDouble("tauxInteret");
+                int dureeEnMois = res.getInt("dureeEnMois");
+                String typeCredit = res.getString("typeCredit");
+                DecisionEnum decision = DecisionEnum.valueOf(res.getString("decision"));
+
+                list.add(new Credit(dateDeCredit, montantDemande, montantOctroye, tauxInteret, dureeEnMois, typeCredit, decision));
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL error: " + e.getMessage());
+        }
+
+        return list;
     }
 }
