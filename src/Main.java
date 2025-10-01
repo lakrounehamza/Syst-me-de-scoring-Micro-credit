@@ -54,7 +54,7 @@ public class Main {
                 "Informatique",
                 "Développement logiciel"
         );
-        System.out.println(pro1);
-        pro.addProfessionnel(pro1);
+        //System.out.println(pro1);
+        pro.getAllProfessionnel().forEach(pr-> System.out.println(pr.toString()));
     }
 }
