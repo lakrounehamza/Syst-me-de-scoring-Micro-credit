@@ -3,11 +3,12 @@ package model;
 import enums.DecisionEnum;
 import enums.TypeIncidentEnum;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class Credit {
     private UUID id;
-    private Date dateDeCredit;
+    private LocalDate dateDeCredit;
     private double montantDemande;
     private double montantOctroye;
     private double tauxInteret;
@@ -15,7 +16,7 @@ public class Credit {
     private String typeCredit;
     private DecisionEnum decision;
 
-    public Credit(Date dateDeCredit, double montantDemande, double montantOctroye, double tauxInteret, int dureeEnMois, String typeCredit, DecisionEnum decision) {
+    public Credit(LocalDate dateDeCredit, double montantDemande, double montantOctroye, double tauxInteret, int dureeEnMois, String typeCredit, DecisionEnum decision) {
         setId();
         this.dateDeCredit = dateDeCredit;
         this.montantDemande = montantDemande;
@@ -38,11 +39,11 @@ public class Credit {
         this.id =  UUID.randomUUID();
     }
 
-    public Date getDateDeCredit() {
+    public LocalDate getDateDeCredit() {
         return dateDeCredit;
     }
 
-    public void setDateDeCredit(Date dateDeCredit) {
+    public void setDateDeCredit(LocalDate dateDeCredit) {
         this.dateDeCredit = dateDeCredit;
     }
 
@@ -86,8 +87,8 @@ public class Credit {
         this.typeCredit = typeCredit;
     }
 
-    public DecisionEnum getDecision() {
-        return decision;
+    public String getDecision() {
+        return decision.toString();
     }
 
     public void setDecision(DecisionEnum decision) {
