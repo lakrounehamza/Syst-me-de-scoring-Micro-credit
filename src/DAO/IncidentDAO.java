@@ -21,4 +21,14 @@ public class IncidentDAO {
             System.out.println(e.getMessage());
         }
     }
+    public  void deleteIncident(String id){
+        try(Connection  connection   =  ConnectionDB.getInstance().getConnection()){
+            PreparedStatement stmt = connection.prepareStatement("delete from incidents   where id = ?");
+            stmt.setString(1,id);
+            stmt.executeQuery();
+            System.out.println("incidents   et   supprimer   avec succes ");
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
 }
