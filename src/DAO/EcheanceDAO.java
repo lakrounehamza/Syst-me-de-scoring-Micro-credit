@@ -8,25 +8,23 @@ import java.sql.Connection;
 import java.sql.*;
 
 public class EcheanceDAO {
-    public  EcheanceDAO(){}
-    public void addCredit(Credit credit, String idPersonne) {
-        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
-            String sql = "INSERT INTO credits (id, idpersonne, dateDeCredit, montantDemande, montantOctroye, " +
-                    "tauxInteret, dureeEnMois, typeCredit, decision) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public EcheanceDAO() {
+    }
 
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setString(1, credit.getId().toString());
-            stmt.setString(2, idPersonne);
-            stmt.setDate(3, Date.valueOf(credit.getDateDeCredit()));
-            stmt.setDouble(4, credit.getMontantDemande());
-            stmt.setDouble(5, credit.getMontantOctroye());
-            stmt.setDouble(6, credit.getTauxInteret());
-            stmt.setInt(7, credit.getDureeEnMois());
-            stmt.setString(8, credit.getTypeCredit());
-            stmt.setString(9, credit.getDecision().toString());
+    public void addEcheance(Echeance echeance, String idCredit) {
+        String sql = "INSERT INTO echeances (id, idcredit, dateecheance, mensualite, datedepaiement, statutpaiement) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
 
+        try (Connection connection = ConnectionDB.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, echeance.getId().toString());
+            stmt.setString(2, idCredit);
+            stmt.setDate(3, Date.valueOf(echeance.getDateecheance().toString()));
+            stmt.setDouble(4, echeance.getMensualite());
+            stmt.setDate(5, Date.valueOf(echeance.getDatedepaiement().toString()));
+            stmt.setString(6, echeance.getStatutpaiement().toString());
             stmt.executeUpdate();
-            System.out.println(" Crédit ajouté avec succès !");
+            System.out.println(" Échéance ajoutée avec succès !");
         } catch (SQLException e) {
             System.out.println("SQL error: " + e.getMessage());
         }
