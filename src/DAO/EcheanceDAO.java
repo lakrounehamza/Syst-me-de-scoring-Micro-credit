@@ -29,5 +29,28 @@ public class EcheanceDAO {
             System.out.println("SQL error: " + e.getMessage());
         }
     }
+    public void deleteEcheane(String id){
+        try(Connection  connection   = ConnectionDB.getInstance().getConnection()){
+            PreparedStatement  stmt  = connection.prepareStatement("delete from echeances where  id =?");
+            stmt.setString(1,id);
+            stmt.executeUpdate();
+        }catch (SQLException e){
+            System.out.println("SQL  erorr : "+e.getMessage());
+        }
+    }
+    public  void  updateEcheane(Echeance echeance){
+        try(Connection  connection   = ConnectionDB.getInstance().getConnection()){
+            PreparedStatement  stmt  = connection.prepareStatement("update echeanes set dateecheance = ?, mensualite =?, datedepaiement=?, statutpaiement=? where  id =?");
+            stmt.setDate(1, Date.valueOf(echeance.getDateecheance().toString()));
+            stmt.setDouble(2, echeance.getMensualite());
+            stmt.setDate(3, Date.valueOf(echeance.getDatedepaiement().toString()));
+            stmt.setString(4, echeance.getStatutpaiement().toString());
+            stmt.setString(5, echeance.getId().toString());
 
+            stmt.executeUpdate();
+
+        }catch (SQLException exception){
+            System.out.println(exception.getMessage());
+        }
+    }
 }
