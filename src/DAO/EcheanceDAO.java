@@ -1,11 +1,13 @@
 package DAO;
 
+import enums.StatutPaiementEnum;
 import model.ConnectionDB;
 import model.Credit;
 import model.Echeance;
 
 import java.sql.Connection;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class EcheanceDAO {
     public EcheanceDAO() {
@@ -29,18 +31,20 @@ public class EcheanceDAO {
             System.out.println("SQL error: " + e.getMessage());
         }
     }
-    public void deleteEcheane(String id){
-        try(Connection  connection   = ConnectionDB.getInstance().getConnection()){
-            PreparedStatement  stmt  = connection.prepareStatement("delete from echeances where  id =?");
-            stmt.setString(1,id);
+
+    public void deleteEcheane(String id) {
+        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
+            PreparedStatement stmt = connection.prepareStatement("delete from echeances where  id =?");
+            stmt.setString(1, id);
             stmt.executeUpdate();
-        }catch (SQLException e){
-            System.out.println("SQL  erorr : "+e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("SQL  erorr : " + e.getMessage());
         }
     }
-    public  void  updateEcheane(Echeance echeance){
-        try(Connection  connection   = ConnectionDB.getInstance().getConnection()){
-            PreparedStatement  stmt  = connection.prepareStatement("update echeanes set dateecheance = ?, mensualite =?, datedepaiement=?, statutpaiement=? where  id =?");
+
+    public void updateEcheane(Echeance echeance) {
+        try (Connection connection = ConnectionDB.getInstance().getConnection()) {
+            PreparedStatement stmt = connection.prepareStatement("update echeanes set dateecheance = ?, mensualite =?, datedepaiement=?, statutpaiement=? where  id =?");
             stmt.setDate(1, Date.valueOf(echeance.getDateecheance().toString()));
             stmt.setDouble(2, echeance.getMensualite());
             stmt.setDate(3, Date.valueOf(echeance.getDatedepaiement().toString()));
@@ -49,8 +53,35 @@ public class EcheanceDAO {
 
             stmt.executeUpdate();
 
-        }catch (SQLException exception){
+        } catch (SQLException exception) {
             System.out.println(exception.getMessage());
         }
+    }
+
+    public ArrayList<Echeance> getAllEcheanceByCredit(String idCredit) {
+        ArrayList<Echeance> array = new ArrayList<>();
+
+        String sql = "SELECT dateecheance, mensualite, datedepaiement, statutpaiement " +
+                "FROM echeances WHERE idcredit = ?";
+
+        try (Connection connection = ConnectionDB.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setString(1, idCredit);
+            ResultSet res = stmt.executeQuery();
+
+            while (res.next()) {
+                Date dateEcheance = res.getDate("dateecheance");
+                double mensualite = res.getDouble("mensualite");
+                Date datePaiement = res.getDate("datedepaiement");
+                StatutPaiementEnum statut = StatutPaiementEnum.valueOf(res.getString("statutpaiement"));
+                array.add(new Echeance(dateEcheance, mensualite, datePaiement, statut));
+            }
+
+        } catch (SQLException e) {
+            System.out.println("SQL error: " + e.getMessage());
+        }
+
+        return array;
     }
 }
