@@ -5,6 +5,7 @@ import model.Professionnel;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class ProfessionnelDAO {
     public ProfessionnelDAO() {
@@ -84,6 +85,7 @@ public class ProfessionnelDAO {
             ResultSet res = stmt.executeQuery(sql);
 
             while (res.next()) {
+                String  id = res.getString("id");
                 Professionnel prof = new Professionnel(
                         res.getString("nom"),
                         res.getString("prenom"),
@@ -99,8 +101,10 @@ public class ProfessionnelDAO {
                         res.getString("secteuractivite"),
                         res.getString("activite")
                 );
+                prof.setId(UUID.fromString(id));
                 list.add(prof);
             }
+            stmt.close();
         } catch (SQLException e) {
             System.out.println("Erreur SQL: " + e.getMessage());
         }

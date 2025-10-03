@@ -8,6 +8,7 @@ import model.Echeance;
 import java.sql.Connection;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class EcheanceDAO {
     public EcheanceDAO() {
@@ -61,7 +62,7 @@ public class EcheanceDAO {
     public ArrayList<Echeance> getAllEcheanceByCredit(String idCredit) {
         ArrayList<Echeance> array = new ArrayList<>();
 
-        String sql = "SELECT dateecheance, mensualite, datedepaiement, statutpaiement " +
+        String sql = "SELECT echeances.id  dateecheance, mensualite, datedepaiement, statutpaiement " +
                 "FROM echeances WHERE idcredit = ?";
 
         try (Connection connection = ConnectionDB.getInstance().getConnection();
@@ -71,11 +72,15 @@ public class EcheanceDAO {
             ResultSet res = stmt.executeQuery();
 
             while (res.next()) {
+                String idc = res.getString("id");
                 Date dateEcheance = res.getDate("dateecheance");
                 double mensualite = res.getDouble("mensualite");
                 Date datePaiement = res.getDate("datedepaiement");
                 StatutPaiementEnum statut = StatutPaiementEnum.valueOf(res.getString("statutpaiement"));
-                array.add(new Echeance(dateEcheance, mensualite, datePaiement, statut));
+                Echeance echeance =new Echeance(dateEcheance, mensualite, datePaiement, statut);
+                echeance.setId(UUID.fromString(idc));
+                array.add(echeance);
+
             }
 
         } catch (SQLException e) {

@@ -5,13 +5,13 @@ import enums.TypeIncidentEnum;
 import java.util.*;
 
 public class Incident {
-    private UUID id ;
+    private UUID id;
     private Date dateIncident;
     private String echeance;
     private int score;
     private TypeIncidentEnum typeincident;
 
-    public Incident( Date dateIncident, String echeance, int score, TypeIncidentEnum typeincident) {
+    public Incident(Date dateIncident, String echeance, int score, TypeIncidentEnum typeincident) {
         setId();
         this.dateIncident = dateIncident;
         this.echeance = echeance;
@@ -29,6 +29,10 @@ public class Incident {
 
     public void setId() {
         this.id = UUID.randomUUID();
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public Date getDateIncident() {
@@ -67,9 +71,9 @@ public class Incident {
     public String toString() {
         return
                 "id=" + id +
-                ", dateIncident=" + dateIncident +
-                ", echeance='" + echeance + '\'' +
-                ", score=" + score +
-                ", typeincident=" + typeincident ;
+                        ", dateIncident=" + dateIncident +
+                        ", echeance='" + echeance + '\'' +
+                        ", score=" + score +
+                        ", typeincident=" + typeincident;
     }
 }

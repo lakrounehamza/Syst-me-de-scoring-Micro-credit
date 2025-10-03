@@ -7,6 +7,7 @@ import model.Credit;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class CreditDAO {
     public void addCredit(Credit credit ,String idPersonne) {
@@ -63,13 +64,14 @@ public class CreditDAO {
         ArrayList<Credit> list = new ArrayList<>();
         try (Connection connection = ConnectionDB.getInstance().getConnection()) {
             PreparedStatement stmt = connection.prepareStatement(
-                    "SELECT dateDeCredit, montantDemande, montantOctroye, tauxInteret, dureeEnMois, typeCredit, decision " +
+                    "SELECT credits.id,dateDeCredit, montantDemande, montantOctroye, tauxInteret, dureeEnMois, typeCredit, decision " +
                             "FROM credits WHERE idpersonne = ?"
             );
             stmt.setString(1, id);
             ResultSet res = stmt.executeQuery();
 
             while (res.next()) {
+                String idc = res.getString("id");
                 LocalDate dateDeCredit = res.getDate("dateDeCredit").toLocalDate();
                 double montantDemande = res.getDouble("montantDemande");
                 double montantOctroye = res.getDouble("montantOctroye");
@@ -78,7 +80,9 @@ public class CreditDAO {
                 String typeCredit = res.getString("typeCredit");
                 DecisionEnum decision = DecisionEnum.valueOf(res.getString("decision"));
 
-                list.add(new Credit(dateDeCredit, montantDemande, montantOctroye, tauxInteret, dureeEnMois, typeCredit, decision));
+                Credit credit= new Credit(dateDeCredit, montantDemande, montantOctroye, tauxInteret, dureeEnMois, typeCredit, decision);
+                credit.setId(UUID.fromString(idc));
+                list.add(credit);
             }
         } catch (SQLException e) {
             System.out.println("SQL error: " + e.getMessage());

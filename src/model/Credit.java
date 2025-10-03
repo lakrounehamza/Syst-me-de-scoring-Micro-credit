@@ -36,7 +36,11 @@ public class Credit {
     }
 
     public void setId() {
-        this.id =  UUID.randomUUID();
+        this.id = UUID.randomUUID();
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public LocalDate getDateDeCredit() {
@@ -94,17 +98,18 @@ public class Credit {
     public void setDecision(DecisionEnum decision) {
         this.decision = decision;
     }
+
     @Override
     public String toString() {
         return
                 "id=" + id +
-                ", dateDeCredit = " + dateDeCredit +
-                ", montantDemande = " + montantDemande +
-                ", montantOctroye = " + montantOctroye +
-                ", tauxInteret = " + tauxInteret +
-                ", dureeEnMois = " + dureeEnMois +
-                ", typeCredit = '" + typeCredit + '\'' +
-                ", decision = " + decision ;
+                        ", dateDeCredit = " + dateDeCredit +
+                        ", montantDemande = " + montantDemande +
+                        ", montantOctroye = " + montantOctroye +
+                        ", tauxInteret = " + tauxInteret +
+                        ", dureeEnMois = " + dureeEnMois +
+                        ", typeCredit = '" + typeCredit + '\'' +
+                        ", decision = " + decision;
     }
 
 }

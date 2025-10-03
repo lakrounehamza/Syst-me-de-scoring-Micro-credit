@@ -89,25 +89,27 @@ public class EmployeDAO {
             Statement stmt = connection.createStatement();
             ResultSet res = stmt.executeQuery("select  p.* , e.salaire ,e.anciennete,e.poste,e.typecontrat,e.secteur   from  employes  e  join   persones  p   on   p.id=e.id");
             while (res.next()) {
-                array.add(
-                        new Employe(
-                                res.getString("nom"),
-                                res.getString("prenom"),
-                                res.getDate("datedenaissance").toLocalDate(),
-                                res.getString("ville"),
-                                res.getInt("nombreEnfants"),
-                                res.getString("investissement"),
-                                res.getString("placement"),
-                                res.getString("situation_familiale"),
-                                res.getString("createdAt"),
-                                res.getInt("score"),
-                                res.getDouble("salaire"),
-                                res.getDate("anciennete").toLocalDate(),
-                                res.getString("poste"),
-                                res.getString("typecontrat"),
-                                res.getString("secteur")
-                        )
+                String idc = res.getString("id");
+                Employe employe = new Employe(
+                        res.getString("nom"),
+                        res.getString("prenom"),
+                        res.getDate("datedenaissance").toLocalDate(),
+                        res.getString("ville"),
+                        res.getInt("nombreEnfants"),
+                        res.getString("investissement"),
+                        res.getString("placement"),
+                        res.getString("situation_familiale"),
+                        res.getString("createdAt"),
+                        res.getInt("score"),
+                        res.getDouble("salaire"),
+                        res.getDate("anciennete").toLocalDate(),
+                        res.getString("poste"),
+                        res.getString("typecontrat"),
+                        res.getString("secteur")
+
                 );
+                employe.setId(UUID.fromString(idc));
+                array.add(employe);
             }
         } catch (SQLException e) {
 
