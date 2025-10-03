@@ -31,6 +31,10 @@ public class Echeance {
         this.id = UUID.randomUUID();
     }
 
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
     public Date getDateecheance() {
         return dateecheance;
     }
