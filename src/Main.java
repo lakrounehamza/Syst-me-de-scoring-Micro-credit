@@ -75,6 +75,6 @@ public class Main {
 //        cridt.addCredit(credit1,"f72fb25f-adc7-4e2a-8be7-ebda7d16f851");
 
         Index index = new Index();
-        index.menuPrancibale();
+        index.menuPrincipal();
     }
 }
