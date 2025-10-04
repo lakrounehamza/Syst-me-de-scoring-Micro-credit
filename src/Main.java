@@ -5,6 +5,7 @@ import enums.DecisionEnum;
 import model.Credit;
 import model.Employe;
 import model.Professionnel;
+import view.Index;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -72,5 +73,8 @@ public class Main {
 //        CreditDAO cridt = new CreditDAO();
 //        Credit credit = new Credit();
 //        cridt.addCredit(credit1,"f72fb25f-adc7-4e2a-8be7-ebda7d16f851");
+
+        Index index = new Index();
+        index.menuPrancibale();
     }
 }
