@@ -5,11 +5,15 @@ import java.util.*;
 public class Index {
     public Scanner reader;
     public Scanner readerCheffer;
-    public EmployeView  employeView;
+    public EmployeView employeView;
+    private ProfessionnelView professionnelView;
+
     public Index() {
         reader = new Scanner(System.in);
         readerCheffer = new Scanner(System.in);
-        employeView  = new EmployeView ();
+        employeView = new EmployeView();
+        professionnelView = new ProfessionnelView();
+
     }
 
     public void menuPrincipal() {
@@ -32,8 +36,10 @@ public class Index {
             }
         }
         switch (choix) {
-            case 1:menuAddPersonne();break
-                ;
+            case 1:
+                menuAddPersonne();
+                break
+                        ;
             case 2:
                 ;
             case 3:
@@ -53,18 +59,46 @@ public class Index {
         while (true) {
             System.out.print("entre  la choix : ");
             try {
-                 choix = readerCheffer.nextInt();
+                choix = readerCheffer.nextInt();
                 if (choix < 0 || choix > 5)
                     throw new IllegalArgumentException("doit  entre  un  value  entre 1 et 4");
                 break;
-            }catch(InputMismatchException  | IllegalArgumentException e){
+            } catch (InputMismatchException | IllegalArgumentException e) {
                 System.out.println(e.getMessage());
                 readerCheffer.nextLine();
             }
         }
-        switch (choix){
-            case 1: employeView.addEmploye();break;
+        switch (choix) {
+            case 1:
+                employeView.addEmploye();
+                menuAddPersonne();
+                break;
+            case 2:
+                professionnelView.addProfessionnel();
+                menuAddPersonne();
+                break;
+            case 3:
+                menuPrincipal();
+                break;
+            case 4:
+                break;
         }
     }
 
+    public void connected() {
+        Scanner read = new Scanner(System.in);
+        int id;
+        System.out.println("==============================================");
+        System.out.print("=== entre votre  id : ");
+        while (true) {
+            try {
+                id = read.nextInt();
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("doit entre un  nombre  entaire ");
+                read.nextLine();
+            }
+        }
+
+    }
 }

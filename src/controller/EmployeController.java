@@ -2,9 +2,11 @@ package controller;
 
 import DAO.EmployeDAO;
 import model.Employe;
-
+import  java.util.*;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public class EmployeController {
     private EmployeDAO employeDAO;
@@ -63,5 +65,15 @@ public class EmployeController {
         if(employe.getInvestissement() != null && !employe.getInvestissement().isEmpty()) score += 10;
         employe.setScore(score);
         employeDAO.addEmploye(employe);
+    }
+
+    public Optional<Employe> getEmployeById(String id){
+        Stream<Employe> stream = getAllEmploye().stream();
+       return stream.filter(e->e.getId().toString().equals(id)).findFirst();
+    }
+    public ArrayList<Employe>  getAllEmploye(){
+        ArrayList<Employe>   list = new ArrayList<>();
+        list = employeDAO.getAllEmploye();
+        return   list ;
     }
 }
